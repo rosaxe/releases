@@ -14,6 +14,9 @@ ath79_setup_interfaces()
 		ucidef_add_switch "switch1" \
 			"0@eth1" "1:lan:4" "2:lan:1" "3:lan:2" "4:lan:3"
 		;;
+	mikrotik,routerboard-960pgs)
+		ucidef_set_interface_lan "sfp lan1 lan2 lan3 lan4 lan5"
+		;;
 	mikrotik,routerboard-912uag-2hpnd|\
 	mikrotik,routerboard-lhg-2nd|\
 	mikrotik,routerboard-lhg-5nd|\
@@ -59,6 +62,17 @@ ath79_setup_macs()
 		label_mac="$mac_base"
 		lan_mac="$mac_base"
 		wan_mac=$(macaddr_add $mac_base 1)
+		;;
+	mikrotik,routerboard-960pgs)
+		label_mac=$mac_base
+		ucidef_set_bridge_device switch
+		ucidef_set_bridge_mac "$mac_base"
+		ucidef_set_network_device_mac "sfp" "$mac_base"
+		ucidef_set_network_device_mac "lan1" "$(macaddr_add $mac_base 1)"
+		ucidef_set_network_device_mac "lan2" "$(macaddr_add $mac_base 2)"
+		ucidef_set_network_device_mac "lan3" "$(macaddr_add $mac_base 3)"
+		ucidef_set_network_device_mac "lan4" "$(macaddr_add $mac_base 4)"
+		ucidef_set_network_device_mac "lan5" "$(macaddr_add $mac_base 5)"
 		;;
 	*)
 		label_mac="$mac_base"
