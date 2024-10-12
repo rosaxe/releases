@@ -36,7 +36,6 @@ case "$board" in
 abt,asr3000|\
 h3c,magic-nx30-pro|\
 h3c,magic-nx30-pro-114m-ubootmod|\
-h3c,magic-nx30-pro-nmbm|\
 jcg,q30-pro|\
 netcore,n60|\
 nokia,ea0326gmp|\
