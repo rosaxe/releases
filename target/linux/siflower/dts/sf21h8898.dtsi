@@ -1,6 +1,22 @@
 #include "sf21.dtsi"
 / {
 	compatible = "siflower,sf21h8898";
+	soc {
+		xgmac5: ethernet@8014000 {
+			compatible = "siflower,sf21-xgmac";
+			reg = <0x0 0x8014000 0x0 0x4000>;
+			dmas = <&edma>;
+			ethsys = <&ethsys>;
+			clocks = <&topcrm CLK_SERDES_CSR>, <&topcrm CLK_GMAC_BYP_REF>;
+			clock-names = "csr", "rgmii";
+			phy-mode = "rgmii";
+			pinctrl-names = "default";
+			pinctrl-0 = <&rgmii_pins>;
+			interrupts = <5 IRQ_TYPE_LEVEL_HIGH>, <25 IRQ_TYPE_LEVEL_HIGH>, <31 IRQ_TYPE_LEVEL_HIGH>;
+			interrupt-names = "sbd", "lpi", "pmt";
+			status = "disabled";
+		};
+	};
 };
 
 &cpus {
