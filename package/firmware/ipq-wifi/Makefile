@@ -6,9 +6,9 @@ PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL=$(PROJECT_GIT)/project/firmware/qca-wireless.git
-PKG_SOURCE_DATE:=2024-10-08
-PKG_SOURCE_VERSION:=dcbab62272bf5cab2ed857bc655d240970e14f2a
-PKG_MIRROR_HASH:=e53a3872abf5e35db6baaceb56e6ffa289f8dd9b6226cf8a4d5b87b541179175
+PKG_SOURCE_DATE:=2024-11-03
+PKG_SOURCE_VERSION:=f061e84faf9ccff9eb4b20cb2373a501bd93b3d3
+PKG_MIRROR_HASH:=00f8061bbd665dac2d182be062b5ef274d9ab7d2c56cf1db962347dad6245277
 PKG_FLAGS:=nonshared
 
 include $(INCLUDE_DIR)/package.mk
@@ -54,6 +54,7 @@ ALLWIFIBOARDS:= \
 	skspruce_wia3300-20 \
 	spectrum_sax1v1k \
 	tplink_eap660hd-v1 \
+	tplink_deco-x80-5g \
 	wallys_dr40x9 \
 	xiaomi_ax3600 \
 	xiaomi_ax9000 \
@@ -184,6 +185,7 @@ $(eval $(call generate-ipq-wifi-package,tplink_eap660hd-v1,TP-Link EAP660 HD v1)
 $(eval $(call generate-ipq-wifi-package,wallys_dr40x9,Wallys DR40X9))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax3600,Xiaomi AX3600))
 $(eval $(call generate-ipq-wifi-package,xiaomi_ax9000,Xiaomi AX9000))
+$(eval $(call generate-ipq-wifi-package,tplink_deco-x80-5g,TP-Link Deco X80-5G))
 $(eval $(call generate-ipq-wifi-package,yyets_le1,YYeTs LE1))
 $(eval $(call generate-ipq-wifi-package,yuncore_ax880,Yuncore AX880))
 $(eval $(call generate-ipq-wifi-package,yuncore_fap650,Yuncore FAP650))
