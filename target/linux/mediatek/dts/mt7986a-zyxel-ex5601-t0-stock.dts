@@ -12,7 +12,7 @@
 
 / {
 	model = "Zyxel EX5601-T0";
-	compatible = "zyxel,ex5601-t0", "mediatek,mt7986a-rfb-snand";
+	compatible = "zyxel,ex5601-t0-stock", "mediatek,mt7986a-rfb-snand";
 
 	memory@40000000 {
 		device_type = "memory";
