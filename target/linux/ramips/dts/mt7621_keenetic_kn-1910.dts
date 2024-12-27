@@ -16,21 +16,22 @@
 		label-mac-device = &gmac0;
 	};
 
-	gpio_export {
-		compatible = "gpio-export";
-		#size-cells = <0>;
+	reg_usb_vbus: regulator-usb {
+		compatible = "regulator-fixed";
+		regulator-name = "usb_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpios = <&gpio 5 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
 
-		left_usb_power_on {
-			gpio-export,name = "left-usb:power-on";
-			gpio-export,output = <1>;
-			gpios = <&gpio 5 GPIO_ACTIVE_HIGH>;
-		};
-
-		right_usb_power_on {
-			gpio-export,name = "right-usb:power-on";
-			gpio-export,output = <1>;
-			gpios = <&gpio 11 GPIO_ACTIVE_HIGH>;
-		};
+	reg_3p3v: regulator-3p3v {
+		compatible = "regulator-fixed";
+		regulator-name = "fixed-3.3V";
+		regulator-min-microvolt = <3300000>;
+		regulator-max-microvolt = <3300000>;
+		gpios = <&gpio 11 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
 	};
 
 	keys {
@@ -108,6 +109,11 @@
 	};
 };
 
+&xhci {
+	vbus-supply = <&reg_usb_vbus>;
+	vusb33-supply = <&reg_3p3v>;
+};
+
 &nand {
 	status = "okay";
 
@@ -128,10 +134,28 @@
 			read-only;
 		};
 
-		factory: partition@100000 {
+		partition@100000 {
 			label = "RF-EEPROM";
 			reg = <0x100000 0x80000>;
 			read-only;
+			
+			nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					eeprom_factory_0: eeprom@0 {
+						reg = <0x0 0x4da8>;
+					};
+
+					macaddr_factory_4: macaddr@4 {
+						reg = <0x4 0x6>;
+					};
+
+					macaddr_factory_28: macaddr@28 {
+						reg = <0x28 0x6>;
+					};
+			};
 		};
 
 		firmware1: partition@180000 {
@@ -206,7 +230,8 @@
 	wifi@0,0 {
 		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
-		mediatek,mtd-eeprom = <&factory 0x0>;
+		nvmem-cells = <&eeprom_factory_0>;
+		nvmem-cell-names = "eeprom";
 	};
 };
 
@@ -247,19 +272,5 @@
 		port@4 {
 			status = "okay";
 		};
-	};
-};
-
-&factory {
-	compatible = "nvmem-cells";
-	#address-cells = <1>;
-	#size-cells = <1>;
-
-	macaddr_factory_4: macaddr@4 {
-		reg = <0x4 0x6>;
-	};
-
-	macaddr_factory_28: macaddr@28 {
-		reg = <0x28 0x6>;
 	};
 };
