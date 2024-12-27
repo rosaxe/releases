@@ -19,7 +19,7 @@
 		bootargs = "console=ttyS0,115200";
 	};
 
-gpio_export {
+	gpio_export {
 		compatible = "gpio-export";
 		#size-cells = <0>;
 
@@ -127,10 +127,28 @@ gpio_export {
 				read-only;
 			};
 
-			factory: partition@40000 {
+			partition@40000 {
 				label = "rf-eeprom";
 				reg = <0x40000 0x10000>;
 				read-only;
+				
+				nvmem-layout {
+					compatible = "fixed-layout";
+					#address-cells = <1>;
+					#size-cells = <1>;
+
+					eeprom_factory_0: eeprom@0 {
+						reg = <0x0 0x400>;
+					};
+
+					eeprom_factory_400: eeprom@400 {
+						reg = <0x400 0x4da8>;
+					};
+
+					macaddr_factory_4: macaddr@4 {
+						reg = <0x4 0x6>;
+					};
+				};
 			};
 
 			firmware1: partition@50000 {
@@ -200,7 +218,8 @@ gpio_export {
 &wmac {
 	status = "okay";
 
-	mediatek,mtd-eeprom = <&factory 0x0>;
+	nvmem-cells = <&eeprom_factory_0>;
+	nvmem-cell-names = "eeprom";
 };
 
 &pcie {
@@ -211,17 +230,8 @@ gpio_export {
 	wifi@0,0 {
 		compatible = "mediatek,mt76";
 		reg = <0x0000 0 0 0 0>;
-		mediatek,mtd-eeprom = <&factory 0x0400>;
+		nvmem-cells = <&eeprom_factory_400>;
+		nvmem-cell-names = "eeprom";
 		ieee80211-freq-limit = <5000000 6000000>;
-	};
-};
-
-&factory {
-	compatible = "nvmem-cells";
-	#address-cells = <1>;
-	#size-cells = <1>;
-
-	macaddr_factory_4: macaddr@4 {
-		reg = <0x4 0x6>;
 	};
 };
