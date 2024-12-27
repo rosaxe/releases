@@ -58,6 +58,6 @@
 	};
 };
 
-&gpio1 {
+&gpio_ext {
 	/delete-node/ poe_enable;
 };

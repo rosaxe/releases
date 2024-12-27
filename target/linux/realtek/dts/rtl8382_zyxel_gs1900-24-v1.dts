@@ -13,8 +13,8 @@
 	/* i2c of the left SFP cage: port 25 */
 	i2c0: i2c-gpio-0 {
 		compatible = "i2c-gpio";
-		sda-gpios = <&gpio1 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-		scl-gpios = <&gpio1 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		sda-gpios = <&gpio_ext 24 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		scl-gpios = <&gpio_ext 25 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 		i2c-gpio,delay-us = <2>;
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -23,17 +23,17 @@
 	sfp0: sfp-p25 {
 		compatible = "sff,sfp";
 		i2c-bus = <&i2c0>;
-		los-gpio = <&gpio1 27 GPIO_ACTIVE_HIGH>;
-		tx-fault-gpio = <&gpio1 22 GPIO_ACTIVE_HIGH>;
-		mod-def0-gpio = <&gpio1 26 GPIO_ACTIVE_LOW>;
-		tx-disable-gpio = <&gpio1 23 GPIO_ACTIVE_HIGH>;
+		los-gpio = <&gpio_ext 27 GPIO_ACTIVE_HIGH>;
+		tx-fault-gpio = <&gpio_ext 22 GPIO_ACTIVE_HIGH>;
+		mod-def0-gpio = <&gpio_ext 26 GPIO_ACTIVE_LOW>;
+		tx-disable-gpio = <&gpio_ext 23 GPIO_ACTIVE_HIGH>;
 	};
 
 	/* i2c of the right SFP cage: port 26 */
 	i2c1: i2c-gpio-1 {
 		compatible = "i2c-gpio";
-		sda-gpios = <&gpio1 30 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
-		scl-gpios = <&gpio1 31 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		sda-gpios = <&gpio_ext 30 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
+		scl-gpios = <&gpio_ext 31 (GPIO_ACTIVE_HIGH | GPIO_OPEN_DRAIN)>;
 		i2c-gpio,delay-us = <2>;
 		#address-cells = <1>;
 		#size-cells = <0>;
@@ -42,10 +42,10 @@
 	sfp1: sfp-p26 {
 		compatible = "sff,sfp";
 		i2c-bus = <&i2c1>;
-		los-gpio = <&gpio1 33 GPIO_ACTIVE_HIGH>;
-		tx-fault-gpio = <&gpio1 28 GPIO_ACTIVE_HIGH>;
-		mod-def0-gpio = <&gpio1 32 GPIO_ACTIVE_LOW>;
-		tx-disable-gpio = <&gpio1 29 GPIO_ACTIVE_HIGH>;
+		los-gpio = <&gpio_ext 33 GPIO_ACTIVE_HIGH>;
+		tx-fault-gpio = <&gpio_ext 28 GPIO_ACTIVE_HIGH>;
+		mod-def0-gpio = <&gpio_ext 32 GPIO_ACTIVE_LOW>;
+		tx-disable-gpio = <&gpio_ext 29 GPIO_ACTIVE_HIGH>;
 	};
 };
 
@@ -123,6 +123,6 @@
 	};
 };
 
-&gpio1 {
+&gpio_ext {
 	/delete-node/ poe_enable;
 };

@@ -232,6 +232,19 @@
 		};
 	};
 
+	switchcore@1b000000 {
+		compatible = "syscon", "simple-mfd";
+		reg = <0x1b000000 0x20000>;
+
+		mdio_aux: mdio-aux {
+			compatible = "realtek,rtl8380-aux-mdio";
+			#address-cells = <1>;
+			#size-cells = <1>;
+
+			status = "disabled";
+		};
+	};
+
 	pinmux: pinmux@1b001000 {
 		compatible = "pinctrl-single";
 		reg = <0x1b001000 0x4>;
